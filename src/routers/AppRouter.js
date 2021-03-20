@@ -5,7 +5,7 @@ import { AuthRouter } from './AuthRouter';
 export const AppRouter = () => {
     return (
         <Router>
-      <div>
+      <div className="app__container">
         <Switch>
           <Route
             path="/auth"
