@@ -1,25 +1,50 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+
 import { Link } from "react-router-dom";
+import { login } from "../../actions/auth";
+import { useForm } from "../../hooks/useForm";
 
 export const LoginScreen = () => {
+  //dispatch for value. React-redux hook
+  const dispatch = useDispatch();
+
+  //hook useForn
+  const [formValues, handleInputChange] = useForm({
+    email: "santigp258@gmail.com",
+    password: "1234",
+  });
+
+  const { email, password } = formValues;
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+
+    //send action
+    dispatch(login(12345, 'Santiago Guerrero'));
+  };
   return (
     <>
       <h3 className="auth__title">Login</h3>
-      <form action="">
+      <form onSubmit={handleLogin}>
         <input
           className="auth__input"
           type="text"
           placeholder="Email"
           name="email"
           autoComplete="off"
+          value={email}
+          onChange={handleInputChange}
         />
         <input
           className="auth__input"
           type="text"
           placeholder="Password"
           name="password"
+          value={password}
+          onChange={handleInputChange}
         />
-        <button type="submit" className="btn btn-primary btn-block" >
+        <button type="submit" className="btn btn-primary btn-block">
           Login
         </button>
         <div className="auth__social-networks">
@@ -38,7 +63,9 @@ export const LoginScreen = () => {
           </div>
         </div>
 
-        <Link to="/auth/register" className="link">Create a new account</Link>
+        <Link to="/auth/register" className="link">
+          Create a new account
+        </Link>
       </form>
     </>
   );
