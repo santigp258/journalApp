@@ -1,7 +1,11 @@
 @import "./base/settings";
 @import "./base/base";
 
-//components
-@import './components/auth';
-@import './components/buttons';
-@import './components/links';
+/*** Components ****/
+@import "./components/buttons";
+@import "./components/links";
+//auth
+@import "./components/auth";
+
+//journal
+@import "./components/journal";
