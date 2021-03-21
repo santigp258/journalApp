@@ -1,13 +1,21 @@
-import React from "react";
-import { useDispatch } from "react-redux";
+import React, { useLayoutEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import { Link } from "react-router-dom";
 import { startGoogleLogin, startLoginEmailPassword } from "../../actions/auth";
+
+import validator from "validator";
+import { removeError, setError } from "../../actions/ui";
 import { useForm } from "../../hooks/useForm";
 
 export const LoginScreen = () => {
   //dispatch for value. React-redux hook
   const dispatch = useDispatch();
+
+  //delete other errors
+  useLayoutEffect(() => {
+    dispatch(removeError("No email"));
+  }, []);
 
   //hook useForn
   const [formValues, handleInputChange] = useForm({
@@ -15,23 +23,46 @@ export const LoginScreen = () => {
     password: "1234",
   });
 
+  //content ui state
+  const { msgError } = useSelector((state) => state.ui);
   const { email, password } = formValues;
 
   const handleLogin = (e) => {
     e.preventDefault();
 
     //send action
-    dispatch(startLoginEmailPassword(email, password));
+    if (isFormValid()) {
+      dispatch(startLoginEmailPassword(email, password));
+    } else {
+      console.log("no valid");
+    }
   };
 
   //login with Google
   const handleGoogleLogin = () => {
     dispatch(startGoogleLogin());
   };
+
+  const isFormValid = () => {
+    if (!validator.isEmail(email)) {
+      dispatch(setError("Is not email. Try valid email"));
+    } else if (password.trim().length < 5) {
+      dispatch(
+        setError(
+          "Password should be at least 6 characters and match each other"
+        )
+      );
+      return false;
+    } else {
+      return true;
+    }
+  };
+
   return (
     <>
       <h3 className="auth__title">Login</h3>
       <form onSubmit={handleLogin}>
+        {msgError && <div className="auth__alert-error">{msgError}</div>}
         <input
           className="auth__input"
           type="text"
@@ -43,7 +74,7 @@ export const LoginScreen = () => {
         />
         <input
           className="auth__input"
-          type="text"
+          type="password"
           placeholder="Password"
           name="password"
           value={password}

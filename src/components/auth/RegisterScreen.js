@@ -1,11 +1,23 @@
-import React from "react";
+import React, { useLayoutEffect } from "react";
 import { Link } from "react-router-dom";
 import { useForm } from "../../hooks/useForm";
 import validator from "validator";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { removeError, setError } from "../../actions/ui";
+import { startRegisterWithEmailPassword } from "../../actions/auth";
 
 export const RegisterScreen = () => {
+  //errors
+  const dispatch = useDispatch(setError);
+
+  //delete other errors
+  useLayoutEffect(() => {
+    dispatch(removeError("No email"));
+  }, []);
+
+  //content ui state
+  const { msgError } = useSelector((state) => state.ui);
+
   const [formValue, handleInputChange] = useForm({
     name: "",
     email: "",
@@ -15,49 +27,50 @@ export const RegisterScreen = () => {
 
   const { name, email, password, password2 } = formValue;
 
-  //errors
-  const dispatch = useDispatch(setError);
-
   //register onsubmit
   const handleRegister = (e) => {
     e.preventDefault();
     if (isFormValid()) {
-      console.log("Correct");
+      console.log("Hi!");
+      dispatch(startRegisterWithEmailPassword(email, password, name));
     }
   };
 
   const isFormValid = () => {
     if (name.trim().length === 0) {
-      dispatch(setError('name is required'));
+      dispatch(setError("Name is required"));
       return false;
     } else if (!validator.isEmail(email)) {
-      dispatch(setError('No email'));
+      dispatch(setError("No email"));
     } else if (password !== password2 || password.length < 5) {
-      dispatch(setError("password must be 6 characters"));
+      dispatch(
+        setError(
+          "Password should be at least 6 characters and match each other"
+        )
+      );
       return false;
+    } else {
+      return true;
     }
-
-    dispatch(removeError('Correct'))
-    return true;
   };
   return (
     <>
       <h3 className="auth__title">Register</h3>
       <form onSubmit={handleRegister}>
-        <div className="auth__alert-error">Hello</div>
+        {msgError && <div className="auth__alert-error">{msgError}</div>}
         <input
           className="auth__input"
           type="text"
-          placeholder="Email"
-          name="email"
+          placeholder="Name"
+          name="name"
           onChange={handleInputChange}
           autoComplete="off"
         />
         <input
           className="auth__input"
           type="text"
-          placeholder="Name"
-          name="name"
+          placeholder="Email"
+          name="email"
           onChange={handleInputChange}
           autoComplete="off"
         />
