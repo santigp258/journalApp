@@ -1,4 +1,4 @@
-import React, { useLayoutEffect } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { Link } from "react-router-dom";
@@ -13,9 +13,9 @@ export const LoginScreen = () => {
   const dispatch = useDispatch();
 
   //delete other errors
-  useLayoutEffect(() => {
+  useEffect(() => {
     dispatch(removeError("No email"));
-  }, []);
+  }, [dispatch]);
 
   //hook useForn
   const [formValues, handleInputChange] = useForm({

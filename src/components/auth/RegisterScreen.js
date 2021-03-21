@@ -1,4 +1,4 @@
-import React, { useLayoutEffect } from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useForm } from "../../hooks/useForm";
 import validator from "validator";
@@ -11,9 +11,9 @@ export const RegisterScreen = () => {
   const dispatch = useDispatch(setError);
 
   //delete other errors
-  useLayoutEffect(() => {
+  useEffect(() => {
     dispatch(removeError("No email"));
-  }, []);
+  }, [dispatch]);
 
   //content ui state
   const { msgError } = useSelector((state) => state.ui);
