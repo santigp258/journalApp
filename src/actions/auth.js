@@ -1,12 +1,19 @@
 import { types } from "../types/types";
 import { firebase, googleAuthProvider } from "../firebase/firebaseConfig";
+import { finishLoading, startLoading } from "./ui";
 
 //login email and password
 export const startLoginEmailPassword = (email, password) => {
   return (dispatch) => {
-    firebase.auth().signInWithEmailAndPassword(email, password).then(
-      ({user}) =>  dispatch(login(user.uid, user.displayName))
-    ).catch(err => console.log('err', err));
+    dispatch(startLoading());
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(email, password)
+      .then(({ user }) => {
+        dispatch(finishLoading());
+        dispatch(login(user.uid, user.displayName));
+      })
+      .catch((err) => console.log("err", err));
   };
 };
 
