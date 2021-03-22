@@ -22,7 +22,6 @@ export const NotesReducer = (state = initialState, action) => {
         notes: [...action.payload],
       };
     case types.notesUpdated:
-      console.log('holaaa');
       return {
         ...state,
         notes: state.notes.map((note) =>

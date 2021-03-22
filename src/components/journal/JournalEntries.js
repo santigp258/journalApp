@@ -4,7 +4,6 @@ import { JournalEntry } from "./JournalEntry";
 
 export const JournalEntries = () => {
   const { notes: entries } = useSelector((state) => state.notes);
-  console.log(entries);
   return (
     <div className="journal__entries">
       {entries &&
