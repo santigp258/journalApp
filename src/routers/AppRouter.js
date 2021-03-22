@@ -9,6 +9,8 @@ import { login } from "../actions/auth";
 import { NoteLoader } from "../components/notes/NoteLoader";
 import { PrivateRoutes } from "./PrivateRoutes";
 import { PublicRoutes } from "./PublicRoutes";
+import { loadNotes } from "../helpers/loadNotes";
+import { setNotes } from "../actions/notes";
 
 export const AppRouter = () => {
   const dispatch = useDispatch();
@@ -20,8 +22,9 @@ export const AppRouter = () => {
 
   useEffect(() => {
     //current user
-    firebase.auth().onAuthStateChanged((user) => {
+    firebase.auth().onAuthStateChanged(async (user) => {
       if (user?.uid) {
+        //dipatch user information
         dispatch(login(user.uid, user.displayName));
 
         //hidden loader
@@ -29,6 +32,10 @@ export const AppRouter = () => {
 
         //authenticated
         setIsLoggedIn(true);
+
+        //notes data
+        const notes = await loadNotes(user.uid);
+        dispatch(setNotes(notes));
       } else {
         //hidden loader
         setChecking(false);
