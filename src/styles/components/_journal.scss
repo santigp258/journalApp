@@ -1,6 +1,10 @@
 .journal__main-content {
   display: flex;
 }
+
+.journal__displayname {
+  text-transform: capitalize;
+}
 @media only screen and (max-width: 600px) {
   .journal__main-content {
     display: flex;
@@ -10,8 +14,8 @@
   .journal__entries {
     margin-bottom: 20px;
   }
-  .journal__sidebar{
-    width: 100%!important;
+  .journal__sidebar {
+    width: 100% !important;
   }
 }
 .journal__sidebar {
