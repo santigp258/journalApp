@@ -9,8 +9,7 @@ import { login } from "../actions/auth";
 import { NoteLoader } from "../components/notes/NoteLoader";
 import { PrivateRoutes } from "./PrivateRoutes";
 import { PublicRoutes } from "./PublicRoutes";
-import { loadNotes } from "../helpers/loadNotes";
-import { setNotes } from "../actions/notes";
+import { startLoadingNotes } from "../actions/notes";
 
 export const AppRouter = () => {
   const dispatch = useDispatch();
@@ -27,15 +26,14 @@ export const AppRouter = () => {
         //dipatch user information
         dispatch(login(user.uid, user.displayName));
 
-        //hidden loader
-        setChecking(false);
-
         //authenticated
         setIsLoggedIn(true);
 
         //notes data
-        const notes = await loadNotes(user.uid);
-        dispatch(setNotes(notes));
+        dispatch(startLoadingNotes(user.uid));
+
+        //hidden loader
+        setChecking(false);
       } else {
         //hidden loader
         setChecking(false);
