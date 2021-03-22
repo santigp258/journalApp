@@ -1,11 +1,12 @@
-import React, { useEffect } from "react";
+import React from "react";
+import Swal from "sweetalert2";
 import { useDispatch, useSelector } from "react-redux";
 
 import { Link, useHistory } from "react-router-dom";
 import { startGoogleLogin, startLoginEmailPassword } from "../../actions/auth";
 
 import validator from "validator";
-import { removeError, setError } from "../../actions/ui";
+//import { removeError, setError } from "../../actions/ui";
 import { useForm } from "../../hooks/useForm";
 
 export const LoginScreen = () => {
@@ -15,10 +16,10 @@ export const LoginScreen = () => {
   //dispatch for value. React-redux hook
   const dispatch = useDispatch();
 
-  //delete other errors
+  /*   //delete other errors
   useEffect(() => {
     dispatch(removeError("No email"));
-  }, [dispatch]);
+  }, [dispatch]); */
 
   //hook useForn
   const [formValues, handleInputChange] = useForm({
@@ -26,8 +27,8 @@ export const LoginScreen = () => {
     password: "3218825708",
   });
 
-  //content ui state
-  const { msgError, loading } = useSelector((state) => state.ui);
+  //content ui state //msgError
+  const { loading } = useSelector((state) => state.ui);
   const { email, password } = formValues;
 
   const handleLogin = (e) => {
@@ -36,9 +37,7 @@ export const LoginScreen = () => {
     //send action
     if (isFormValid()) {
       dispatch(startLoginEmailPassword(email, password));
-      history.replace('/');
-    } else {
-      console.log("no valid");
+      history.replace("/");
     }
   };
 
@@ -49,12 +48,12 @@ export const LoginScreen = () => {
 
   const isFormValid = () => {
     if (!validator.isEmail(email)) {
-      dispatch(setError("Is not email. Try valid email"));
+      Swal.fire("Error", "Is not email. Try valid email", "error");
     } else if (password.trim().length < 5) {
-      dispatch(
-        setError(
-          "Password should be at least 6 characters and match each other"
-        )
+      Swal.fire(
+        "Error",
+        "Password should be at least 6 characters and match each other",
+        "error"
       );
       return false;
     } else {
@@ -66,7 +65,7 @@ export const LoginScreen = () => {
     <>
       <h3 className="auth__title">Login</h3>
       <form onSubmit={handleLogin}>
-        {msgError && <div className="auth__alert-error">{msgError}</div>}
+        {/*  {msgError && <div className="auth__alert-error">{msgError}</div>} */}
         <input
           className="auth__input"
           type="text"

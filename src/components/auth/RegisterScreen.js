@@ -1,22 +1,23 @@
-import React, { useEffect } from "react";
+import React from "react";
+import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 import { useForm } from "../../hooks/useForm";
 import validator from "validator";
-import { useDispatch, useSelector } from "react-redux";
-import { removeError, setError } from "../../actions/ui";
+import { useDispatch } from "react-redux";
+//import { removeError, setError } from "../../actions/ui";
 import { startRegisterWithEmailPassword } from "../../actions/auth";
 
 export const RegisterScreen = () => {
   //errors
-  const dispatch = useDispatch(setError);
+  const dispatch = useDispatch();
 
-  //delete other errors
+  /*   //delete other errors
   useEffect(() => {
     dispatch(removeError("No email"));
-  }, [dispatch]);
+  }, [dispatch]); */
 
   //content ui state
-  const { msgError } = useSelector((state) => state.ui);
+  //const { msgError } = useSelector((state) => state.ui);
 
   const [formValue, handleInputChange] = useForm({
     name: "",
@@ -31,22 +32,21 @@ export const RegisterScreen = () => {
   const handleRegister = (e) => {
     e.preventDefault();
     if (isFormValid()) {
-      console.log("Hi!");
       dispatch(startRegisterWithEmailPassword(email, password, name));
     }
   };
 
   const isFormValid = () => {
     if (name.trim().length === 0) {
-      dispatch(setError("Name is required"));
+      Swal.fire("Error", "Name is required", "error");
       return false;
     } else if (!validator.isEmail(email)) {
-      dispatch(setError("No email"));
+      Swal.fire("Error", "Is not email. Try valid email", "error");
     } else if (password !== password2 || password.length < 5) {
-      dispatch(
-        setError(
-          "Password should be at least 6 characters and match each other"
-        )
+      Swal.fire(
+        "Error",
+        "Password should be at least 6 characters and match each other",
+        "error"
       );
       return false;
     } else {
@@ -57,7 +57,7 @@ export const RegisterScreen = () => {
     <>
       <h3 className="auth__title">Register</h3>
       <form onSubmit={handleRegister}>
-        {msgError && <div className="auth__alert-error">{msgError}</div>}
+        {/*         {msgError && <div className="auth__alert-error">{msgError}</div>} */}
         <input
           className="auth__input"
           type="text"

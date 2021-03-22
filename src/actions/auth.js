@@ -2,6 +2,7 @@ import { types } from "../types/types";
 import { firebase, googleAuthProvider } from "../firebase/firebaseConfig";
 import { finishLoading, startLoading } from "./ui";
 
+import Swal from "sweetalert2";
 //login email and password
 export const startLoginEmailPassword = (email, password) => {
   return (dispatch) => {
@@ -13,7 +14,10 @@ export const startLoginEmailPassword = (email, password) => {
         dispatch(finishLoading());
         dispatch(login(user.uid, user.displayName));
       })
-      .catch((err) => console.log("err", err));
+      .catch((err) => {
+        dispatch(finishLoading());
+        Swal.fire("Error", err.message, "error");
+      });
   };
 };
 
@@ -28,7 +32,7 @@ export const startRegisterWithEmailPassword = (email, password, name) => {
         await user.updateProfile({ displayName: name });
         dispatch(login(user.uid, user.displayName));
       })
-      .catch((error) => console.log("error", error));
+      .catch((err) => Swal.fire("Error", err.message, "error"));
   };
 };
 
