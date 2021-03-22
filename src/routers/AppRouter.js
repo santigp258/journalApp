@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch } from "react-router-dom";
 import { JournalScreen } from "../components/journal/JournalScreen";
 import { AuthRouter } from "./AuthRouter";
 
@@ -7,11 +7,16 @@ import { firebase } from "../firebase/firebaseConfig";
 import { useDispatch } from "react-redux";
 import { login } from "../actions/auth";
 import { NoteLoader } from "../components/notes/NoteLoader";
+import { PrivateRoutes } from "./PrivateRoutes";
+import { PublicRoutes } from "./PublicRoutes";
 
 export const AppRouter = () => {
   const dispatch = useDispatch();
 
+  //show loader
   const [checking, setChecking] = useState(true);
+
+  const [isLoggedIn, setIsLoggedIn] = useState(true); //true for no errors
 
   useEffect(() => {
     //current user
@@ -19,10 +24,20 @@ export const AppRouter = () => {
       if (user?.uid) {
         dispatch(login(user.uid, user.displayName));
 
+        //hidden loader
         setChecking(false);
+
+        //authenticated
+        setIsLoggedIn(true);
+      } else {
+        //hidden loader
+        setChecking(false);
+        //no auth
+        setIsLoggedIn(false);
       }
     });
-  }, [dispatch, setChecking]);
+  }, [dispatch, setChecking, isLoggedIn]);
+
   if (checking) {
     return <NoteLoader />;
   }
@@ -30,8 +45,17 @@ export const AppRouter = () => {
     <Router>
       <div className="app__container">
         <Switch>
-          <Route path="/auth" component={AuthRouter} />
-          <Route path="/" exact component={JournalScreen} />
+          <PublicRoutes
+            path="/auth"
+            component={AuthRouter}
+            isAuthenticated={isLoggedIn}
+          />
+          <PrivateRoutes
+            path="/"
+            exact
+            component={JournalScreen}
+            isAuthenticated={isLoggedIn}
+          />
         </Switch>
       </div>
     </Router>

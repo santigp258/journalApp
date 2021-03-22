@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { startGoogleLogin, startLoginEmailPassword } from "../../actions/auth";
 
 import validator from "validator";
@@ -9,6 +9,9 @@ import { removeError, setError } from "../../actions/ui";
 import { useForm } from "../../hooks/useForm";
 
 export const LoginScreen = () => {
+  //history for redirect
+  const history = useHistory();
+
   //dispatch for value. React-redux hook
   const dispatch = useDispatch();
 
@@ -19,8 +22,8 @@ export const LoginScreen = () => {
 
   //hook useForn
   const [formValues, handleInputChange] = useForm({
-    email: "santigp258@gmail.com",
-    password: "1234",
+    email: "santiago123@gmail.com",
+    password: "3218825708",
   });
 
   //content ui state
@@ -33,6 +36,7 @@ export const LoginScreen = () => {
     //send action
     if (isFormValid()) {
       dispatch(startLoginEmailPassword(email, password));
+      history.replace('/');
     } else {
       console.log("no valid");
     }

@@ -51,3 +51,19 @@ export const login = (uid, displayName) => ({
     displayName,
   },
 });
+
+export const startLogout = () => {
+  return async (dispatch) => {
+    //firebase logout
+    await firebase.auth().signOut();
+
+    dispatch(logout());
+  };
+};
+
+//local logout
+export const logout = () => {
+  return {
+    type: types.logout,
+  };
+};
