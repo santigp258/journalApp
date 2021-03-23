@@ -83,8 +83,7 @@ export const startUploading = (file) => {
     Swal.fire({
       title: "Uploading...",
       text: "Please Wait",
-      allowOutsideClick: false,
-      onBeforeOpen: () => {
+      willOpen: () => {
         Swal.showLoading();
       },
     });
@@ -95,3 +94,23 @@ export const startUploading = (file) => {
     Swal.close();
   };
 };
+
+//delete from firestore
+export const startDeleting = (id) => {
+  return async (dispatch, getState) => {
+    const uid = getState().auth.uid;
+
+    await db.doc(`/${uid}/journal/notes/${id}`).delete();
+    dispatch(deleteNote(id));
+  };
+};
+
+//delete note
+export const deleteNote = (id) => ({
+  type: types.notesDelete,
+  payload: id,
+});
+
+export const actionCleaning = () => ({
+  type: types.notesActionCleaning
+});
