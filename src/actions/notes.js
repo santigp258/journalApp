@@ -112,5 +112,9 @@ export const deleteNote = (id) => ({
 });
 
 export const actionCleaning = () => ({
-  type: types.notesActionCleaning
+  type: types.notesActionCleaning,
+});
+
+export const noteLogout = () => ({
+  type: types.notesLogoutCleaning,
 });

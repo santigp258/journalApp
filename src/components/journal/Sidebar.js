@@ -13,7 +13,7 @@ export const Sidebar = () => {
   };
 
   const handleAddEntry = () => {
-    dispatch(startNewNote())
+    dispatch(startNewNote());
   };
 
   return (

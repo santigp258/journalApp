@@ -15,7 +15,7 @@ export const NoteScreen = () => {
   const activeId = useRef(note.id);
   useEffect(() => {
     //show changes when one note selected
-    if (note.id !== activeId.current) {
+    if (note?.id !== activeId.current) {
       reset(note, reset);
       activeId.current = note.id;
     }

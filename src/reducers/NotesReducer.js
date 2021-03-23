@@ -38,6 +38,8 @@ export const NotesReducer = (state = initialState, action) => {
         ...state,
         active: null,
       };
+    case types.notesLogoutCleaning:
+      return { ...initialState };
     default:
       return state;
   }
