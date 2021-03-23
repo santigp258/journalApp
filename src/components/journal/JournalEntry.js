@@ -19,7 +19,7 @@ export const JournalEntry = ({ id, title, body, date, url }) => {
     dispatch(activeNote(id, activeEntry));
   };
   return (
-    <div className="journal__entry mt-1" onClick={handleEntryClick}>
+    <div className="animate__animated animate__pulse journal__entry mt-1" onClick={handleEntryClick}>
       {url && (
         <div
           className="journal__entry-picture"
