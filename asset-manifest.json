@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.css": "/santigp258/journalApp/static/css/main.206a600f.chunk.css",
+    "main.js": "/santigp258/journalApp/static/js/main.91bdc80e.chunk.js",
+    "main.js.map": "/santigp258/journalApp/static/js/main.91bdc80e.chunk.js.map",
+    "runtime-main.js": "/santigp258/journalApp/static/js/runtime-main.2cc2d398.js",
+    "runtime-main.js.map": "/santigp258/journalApp/static/js/runtime-main.2cc2d398.js.map",
+    "static/js/2.692d7b66.chunk.js": "/santigp258/journalApp/static/js/2.692d7b66.chunk.js",
+    "static/js/2.692d7b66.chunk.js.map": "/santigp258/journalApp/static/js/2.692d7b66.chunk.js.map",
+    "index.html": "/santigp258/journalApp/index.html",
+    "static/css/main.206a600f.chunk.css.map": "/santigp258/journalApp/static/css/main.206a600f.chunk.css.map",
+    "static/js/2.692d7b66.chunk.js.LICENSE.txt": "/santigp258/journalApp/static/js/2.692d7b66.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.2cc2d398.js",
+    "static/js/2.692d7b66.chunk.js",
+    "static/css/main.206a600f.chunk.css",
+    "static/js/main.91bdc80e.chunk.js"
+  ]
+}
