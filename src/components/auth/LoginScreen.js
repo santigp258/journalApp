@@ -24,7 +24,7 @@ export const LoginScreen = () => {
   //hook useForn
   const [formValues, handleInputChange] = useForm({
     email: "santiago123@gmail.com",
-    password: "3218825708",
+    password: "12345",
   });
 
   //content ui state //msgError
