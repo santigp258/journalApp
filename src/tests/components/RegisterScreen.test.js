@@ -16,7 +16,6 @@ const initState = {
 };
 
 let store = mockStore(initState);
-
 const wrapper = mount(
   <Provider store={store}>
     <MemoryRouter>
@@ -27,5 +26,23 @@ const wrapper = mount(
 describe("pruebas en <RegisterScreen/>", () => {
   test("debe de mostarse correctamente", () => {
     expect(wrapper).toMatchSnapshot();
+  });
+
+  test("debe de hacer el dispatch de la acción respectiva", () => {
+    const emailFiel = wrapper.find('input[name="email"]');
+
+    emailFiel.simulate("change", {
+      target: {
+        value: "",
+        name: "email",
+      },
+    });
+
+    wrapper.find("form").simulate("submit", {
+      preventDefault() {},
+    });
+    const actions = store.getActions();
+    console.log(actions);
+    expect(actions).toEqual([]);
   });
 });
